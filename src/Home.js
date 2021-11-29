@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import SearchPanel from './SearchPanel'
 
 const sortData = (array, sortByColumn, sortByOrder) => {
     // console.log(sortByOrder)
@@ -69,6 +70,10 @@ function Home({apiData}) {
         ['Tingkat']
     ]
 
+    const submitSearchHandler = (queryString) => {
+        console.log(queryString)
+    }
+
     return (
         <div style={{
             display: 'flex',
@@ -87,7 +92,7 @@ function Home({apiData}) {
                 display: 'flex',
                 flexDirection: 'column',
             }}>
-                <Typography>testing</Typography>
+                <SearchPanel submitSearchHandler={submitSearchHandler}/> 
                 <div style={{
                     margin: '1em 1em 1em 1em',
                 }}>
