@@ -62,6 +62,7 @@ const sortData = (array, sortByColumn, sortByOrder) => {
 function Home({apiData}) {
     const [order, setOrder] = useState('desc')
     const [orderBy, setOrderBy] = useState('No.')
+    const [filterBy, setFilterBy] = useState('')
 
     const tableColumns = [
         ['No.', '1em'], 
@@ -71,7 +72,7 @@ function Home({apiData}) {
     ]
 
     const submitSearchHandler = (queryString) => {
-        console.log(queryString)
+        setFilterBy(queryString)
     }
 
     return (
@@ -120,7 +121,15 @@ function Home({apiData}) {
                             </TableHead>
                             <TableBody>
                                 {
-                                    sortData(apiData.data, orderBy, order).map((el, idx) => 
+                                    sortData(apiData.data, orderBy, order).filter(el => {
+                                        if(filterBy.length > 0) {
+                                            return el.kota.toLowerCase().includes(filterBy.toLowerCase())
+                                             || el.prov.toLowerCase().includes(filterBy.toLowerCase())
+                                             || el.hasil.toLowerCase().includes(filterBy.toLowerCase())
+                                        } else {
+                                            return true
+                                        }
+                                    }).map((el, idx) => 
                                         <TableRow key={idx}>
                                             <TableCell>{el.index + 1}</TableCell>
                                             <TableCell>{el.kota}</TableCell>
