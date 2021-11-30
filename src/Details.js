@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Bar, Pie } from 'react-chartjs-2'
 import { useNavigate, useParams } from 'react-router-dom'
+import AnimatedNumber from 'animated-number-react'
 
 ChartJS.register(ArcElement, Legend, Tooltip, CategoryScale, LinearScale, BarElement, Title)
 
@@ -89,13 +90,27 @@ function Details() {
                                             borderWidth: 1,
                                         }]
                                     }}/>
-                                    <div style={{display: 'flex'}}>
+                                    <div style={{display: 'flex', flexGrow: 1}}>
+                                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: '0.25em', marginRight: '0.25em'}}>
+                                            <Typography><AnimatedNumber value={provinceData.jumlah_kasus} duration={1000} formatValue={val => Number(val).toFixed(0)}/></Typography>
+                                            <Typography variant='caption'>Jumlah Kasus</Typography>
+                                        </div>
+
+                                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: '0.25em', marginRight: '0.25em'}}>
+                                            <Typography><AnimatedNumber value={provinceData.jumlah_meninggal} duration={1000} formatValue={val => Number(val).toFixed(0)}/></Typography>
+                                            <Typography variant='caption'>Jumlah Meninggal</Typography>
+                                        </div>
+
+                                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: '0.25em', marginRight: '0.25em'}}>
+                                            <Typography><AnimatedNumber value={provinceData.jumlah_sembuh} duration={1000} formatValue={val => Number(val).toFixed(0)}/></Typography>
+                                            <Typography variant='caption'>Jumlah Sembuh</Typography>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center',}}>
+                                <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <Typography>Berdasarkan Umur</Typography>
-                                    <Bar data={{
+                                    <Bar options={{aspectRatio: 1.1}} data={{
                                         labels: provinceData.kelompok_umur.map(el => el.key),
                                         datasets: [
                                             {
