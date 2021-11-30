@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import SearchPanel from './SearchPanel'
 
 const sortData = (array, sortByColumn, sortByOrder) => {
     // console.log(sortByOrder)
@@ -61,6 +62,7 @@ const sortData = (array, sortByColumn, sortByOrder) => {
 function Home({apiData}) {
     const [order, setOrder] = useState('desc')
     const [orderBy, setOrderBy] = useState('No.')
+    const [filterBy, setFilterBy] = useState('')
 
     const tableColumns = [
         ['No.', '1em'], 
@@ -68,6 +70,10 @@ function Home({apiData}) {
         ['Provinsi'], 
         ['Tingkat']
     ]
+
+    const submitSearchHandler = (queryString) => {
+        setFilterBy(queryString)
+    }
 
     return (
         <div style={{
@@ -87,7 +93,7 @@ function Home({apiData}) {
                 display: 'flex',
                 flexDirection: 'column',
             }}>
-                <Typography>testing</Typography>
+                <SearchPanel submitSearchHandler={submitSearchHandler}/> 
                 <div style={{
                     margin: '1em 1em 1em 1em',
                 }}>
@@ -115,7 +121,15 @@ function Home({apiData}) {
                             </TableHead>
                             <TableBody>
                                 {
-                                    sortData(apiData.data, orderBy, order).map((el, idx) => 
+                                    sortData(apiData.data, orderBy, order).filter(el => {
+                                        if(filterBy.length > 0) {
+                                            return el.kota.toLowerCase().includes(filterBy.toLowerCase())
+                                             || el.prov.toLowerCase().includes(filterBy.toLowerCase())
+                                             || el.hasil.toLowerCase().includes(filterBy.toLowerCase())
+                                        } else {
+                                            return true
+                                        }
+                                    }).map((el, idx) => 
                                         <TableRow key={idx}>
                                             <TableCell>{el.index + 1}</TableCell>
                                             <TableCell>{el.kota}</TableCell>
