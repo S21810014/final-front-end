@@ -1,5 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SearchPanel from './SearchPanel'
 
 const sortData = (array, sortByColumn, sortByOrder) => {
@@ -63,6 +64,7 @@ function Home({apiData}) {
     const [order, setOrder] = useState('desc')
     const [orderBy, setOrderBy] = useState('No.')
     const [filterBy, setFilterBy] = useState('')
+    const navigate = useNavigate()
 
     const tableColumns = [
         ['No.', '1em'], 
@@ -130,7 +132,7 @@ function Home({apiData}) {
                                             return true
                                         }
                                     }).map((el, idx) => 
-                                        <TableRow key={idx}>
+                                        <TableRow key={idx} onClick={() => navigate(`/details/${el.prov.split(' ').join('_')}`)}>
                                             <TableCell>{el.index + 1}</TableCell>
                                             <TableCell>{el.kota}</TableCell>
                                             <TableCell>{el.prov}</TableCell>
