@@ -22,7 +22,6 @@ function Details() {
 
     const provinceName = param.id.split('_').map(el => el.split('').map((e, idx) => idx > 0 ? e.toLowerCase() : e).join('')).join(' ')
     const provinceData = !apiData ? null : apiData.list_data.find(el => el.key === param.id.split('_').join(' '))
-    console.log(provinceData)
 
     return (
         <div style={{
@@ -75,7 +74,7 @@ function Details() {
                                     alignItems: 'center',
                                 }}>
                                     <Typography>Jenis Kelamin</Typography>
-                                    <Pie data={{
+                                    <Pie style={{flexGrow: 1}} data={{
                                         labels: ["Laki-Laki", "Perempuan"],
                                         datasets: [{
                                             data: [provinceData.jenis_kelamin[0].doc_count, provinceData.jenis_kelamin[1].doc_count],
@@ -110,7 +109,7 @@ function Details() {
 
                                 <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <Typography>Berdasarkan Umur</Typography>
-                                    <Bar options={{aspectRatio: 1.1}} data={{
+                                    <Bar options={{aspectRatio: 1.33}} data={{
                                         labels: provinceData.kelompok_umur.map(el => el.key),
                                         datasets: [
                                             {
