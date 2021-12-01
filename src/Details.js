@@ -72,9 +72,10 @@ function Details() {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
+                                    flexGrow: 0.125 
                                 }}>
-                                    <Typography>Jenis Kelamin</Typography>
-                                    <Pie style={{flexGrow: 1}} data={{
+                                    <Typography style={{flexGrow: 1}}>Jenis Kelamin</Typography>
+                                    <Pie data={{
                                         labels: ["Laki-Laki", "Perempuan"],
                                         datasets: [{
                                             data: [provinceData.jenis_kelamin[0].doc_count, provinceData.jenis_kelamin[1].doc_count],
@@ -108,8 +109,8 @@ function Details() {
                                 </div>
 
                                 <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center'}}>
-                                    <Typography>Berdasarkan Umur</Typography>
-                                    <Bar options={{aspectRatio: 1.33}} data={{
+                                    <Typography style={{flexGrow: 1}}>Berdasarkan Umur</Typography>
+                                    <Bar data={{
                                         labels: provinceData.kelompok_umur.map(el => el.key),
                                         datasets: [
                                             {
