@@ -2,6 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SearchPanel from './SearchPanel'
+import './styles.css'
 
 const sortData = (array, sortByColumn, sortByOrder) => {
     // console.log(sortByOrder)
@@ -132,7 +133,7 @@ function Home({apiData}) {
                                             return true
                                         }
                                     }).map((el, idx) => 
-                                        <TableRow key={idx} onClick={() => navigate(`/details/${el.prov.split(' ').join('_')}`)}>
+                                        <TableRow className='tableRow' key={idx} onClick={() => navigate(`/details/${el.prov.split(' ').join('_')}`)}>
                                             <TableCell>{el.index + 1}</TableCell>
                                             <TableCell>{el.kota}</TableCell>
                                             <TableCell>{el.prov}</TableCell>
