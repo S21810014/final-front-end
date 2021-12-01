@@ -4,6 +4,9 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2'
 import { useNavigate, useParams } from 'react-router-dom'
 import AnimatedNumber from 'animated-number-react'
+import shape1 from './shape1.svg'
+import shape2 from './shape2.svg'
+import bg from './bg.svg'
 
 ChartJS.register(ArcElement, Legend, Tooltip, CategoryScale, LinearScale, BarElement, Title)
 
@@ -28,6 +31,7 @@ function Details() {
             display: 'flex',
             height: '100%',
             flexDirection: 'column',
+            backgroundImage: `url(${bg})`
         }}>
             {
                 !apiData ? 
@@ -35,9 +39,9 @@ function Details() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        height: '100%'
+                        height: '100%',
                     }}>
-                        <Typography variant='h3' component='div'>
+                        <Typography variant='h3' component='div' style={{color: 'white'}}>
                             Fetching details for {provinceName}...
                         </Typography>
                     </div>
@@ -45,17 +49,24 @@ function Details() {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        height: '100%'
+                        height: '100%',
+                        alignItems: 'center'
                     }}>
                         <Paper style={{
                             display: 'flex',
                             alignItems: 'center',
                             margin: '1em',
-                            padding: '0.5em'
+                            padding: '0.5em',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            width: '50em',
+                            height: '3em'
                         }}>
-                            <Button variant='contained' onClick={() => navigate('/')}>Back to Home</Button>
-                            <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center'}}>
-                                <Typography variant="h5">
+                            <img style={{position: 'absolute', maxWidth: '30em', top: -160, left: -150}} src={shape1}/>
+                            <img style={{position: 'absolute', maxWidth: '180em', top: -480, right: -450}} src={shape2}/>
+                            <Button style={{position: 'relative', borderColor: 'white', color: 'white'}} variant='outlined' onClick={() => navigate('/')}>Back to Home</Button>
+                            <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center', height: '5em', alignItems: 'center', position: 'relative'}}>
+                                <Typography style={{position: 'relative', color: 'white'}} variant="h5">
                                     Details for {provinceName}
                                 </Typography>
                             </div>
@@ -63,7 +74,8 @@ function Details() {
 
                         <Paper style={{
                             margin: '1em',
-                            padding: '0.5em'
+                            padding: '0.5em',
+                            width: '50em'
                         }}>
                             <div style={{
                                 display: 'flex',
@@ -110,7 +122,7 @@ function Details() {
 
                                 <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center'}}>
                                     <Typography style={{flexGrow: 1}}>Berdasarkan Umur</Typography>
-                                    <Bar data={{
+                                    <Bar options={{aspectRatio: 1}} data={{
                                         labels: provinceData.kelompok_umur.map(el => el.key),
                                         datasets: [
                                             {

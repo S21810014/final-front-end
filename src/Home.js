@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SearchPanel from './SearchPanel'
 import './styles.css'
+import shape1 from './shape1.svg'
+import shape2 from './shape2.svg'
+import bg from './bg.svg'
 
 const sortData = (array, sortByColumn, sortByOrder) => {
     // console.log(sortByOrder)
@@ -82,17 +85,28 @@ function Home({apiData}) {
         <div style={{
             display: 'flex',
             height: '100%',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundImage: `url(${bg})`
         }}>
             <Paper style={{
                 margin: '1em 1em 1em 1em',
+                height: '5em',
+                width: '55em',
+                display: 'flex',
+                alignItems: 'center',
+                overflow: 'hidden',
+                position: 'relative'
             }}>
-                <Typography>Content</Typography>
+                <img style={{position: 'absolute', maxWidth: '15em', top: -45, left: -75}} src={shape1}/>
+                <img style={{position: 'absolute', maxWidth: '75em', top: -400, right: -359}} src={shape2}/>
+                <Typography variant='h3' style={{position: 'relative', marginLeft: '1em'}}>Covid-19 Level | <span style={{color: 'white'}}>Indo</span></Typography>
             </Paper>
 
 
             <Paper style={{
                 margin: '1em 1em 1em 1em',
+                width: '55em',
                 display: 'flex',
                 flexDirection: 'column',
             }}>
