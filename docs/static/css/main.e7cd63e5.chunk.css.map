@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/styles.css"],"names":[],"mappings":"AAAA,UACI,cACJ,CAEA,gBACI,qCAA0C,CAC1C,cACJ","file":"main.e7cd63e5.chunk.css","sourcesContent":[".tableRow {\r\n    transition: 0.5s;\r\n}\r\n\r\n.tableRow:hover {\r\n    background-color: rgba(61, 135, 255, 0.25);\r\n    cursor: pointer;\r\n}"]}
