@@ -4,20 +4,27 @@ import { ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, Linear
 import { Bar, Pie } from 'react-chartjs-2'
 import { useNavigate, useParams } from 'react-router-dom'
 import AnimatedNumber from 'animated-number-react'
+import shape1 from './shape1.svg'
+import shape2 from './shape2.svg'
+import bg from './bg.svg'
 
 ChartJS.register(ArcElement, Legend, Tooltip, CategoryScale, LinearScale, BarElement, Title)
 
 function Details() {
     const [apiData, setApiData] = useState(null)
+    const [dataStatus, setDataStatus] = useState('')
     const param = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
+        setDataStatus('Fetching data...')
         fetch("https://merfry0309.ip6dns.xyz/api/proxy/covidindo2")
-            .then(resp => resp.json())
-            .then(data => {
-                setApiData(data)
+            .then(resp => {
+                setDataStatus('Data Received, converting to JSON...')
+
+                return resp.json()
             })
+            .then(data => setApiData(data))
     }, [])
 
     const provinceName = param.id.split('_').map(el => el.split('').map((e, idx) => idx > 0 ? e.toLowerCase() : e).join('')).join(' ')
@@ -28,6 +35,8 @@ function Details() {
             display: 'flex',
             height: '100%',
             flexDirection: 'column',
+            backgroundImage: `url(${bg})`,
+            backgroundSize: 'cover'
         }}>
             {
                 !apiData ? 
@@ -35,27 +44,38 @@ function Details() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        height: '100%'
+                        height: '100%',
+                        flexDirection: 'column'
                     }}>
-                        <Typography variant='h3' component='div'>
+                        <Typography variant='h3' component='div' style={{color: 'white'}}>
                             Fetching details for {provinceName}...
+                        </Typography>
+                        <Typography style={{marginTop: '3em', color: 'white'}}>
+                            {dataStatus}
                         </Typography>
                     </div>
                     :
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        height: '100%'
+                        height: '100%',
+                        alignItems: 'center'
                     }}>
                         <Paper style={{
                             display: 'flex',
                             alignItems: 'center',
                             margin: '1em',
-                            padding: '0.5em'
+                            padding: '0.5em',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            width: '50em',
+                            height: '3em'
                         }}>
-                            <Button variant='contained' onClick={() => navigate('/')}>Back to Home</Button>
-                            <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center'}}>
-                                <Typography variant="h5">
+                            <img style={{position: 'absolute', maxWidth: '30em', top: -160, left: -150}} src={shape1}/>
+                            <img style={{position: 'absolute', maxWidth: '180em', top: -480, right: -450}} src={shape2}/>
+                            <Button style={{position: 'relative', borderColor: 'white', color: 'white'}} variant='outlined' onClick={() => navigate('/')}>Back to Home</Button>
+                            <div style={{flexGrow: 1, display: 'flex', justifyContent: 'center', height: '5em', alignItems: 'center', position: 'relative'}}>
+                                <Typography style={{position: 'relative', color: 'white'}} variant="h5">
                                     Details for {provinceName}
                                 </Typography>
                             </div>
@@ -63,7 +83,8 @@ function Details() {
 
                         <Paper style={{
                             margin: '1em',
-                            padding: '0.5em'
+                            padding: '0.5em',
+                            width: '50em'
                         }}>
                             <div style={{
                                 display: 'flex',
@@ -72,9 +93,10 @@ function Details() {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
+                                    flexGrow: 0.125 
                                 }}>
-                                    <Typography>Jenis Kelamin</Typography>
-                                    <Pie style={{flexGrow: 1}} data={{
+                                    <Typography style={{flexGrow: 1}}>Jenis Kelamin</Typography>
+                                    <Pie data={{
                                         labels: ["Laki-Laki", "Perempuan"],
                                         datasets: [{
                                             data: [provinceData.jenis_kelamin[0].doc_count, provinceData.jenis_kelamin[1].doc_count],
@@ -108,8 +130,8 @@ function Details() {
                                 </div>
 
                                 <div style={{display: 'flex', flexGrow: 1, flexDirection: 'column', alignItems: 'center'}}>
-                                    <Typography>Berdasarkan Umur</Typography>
-                                    <Bar options={{aspectRatio: 1.33}} data={{
+                                    <Typography style={{flexGrow: 1}}>Berdasarkan Umur</Typography>
+                                    <Bar options={{aspectRatio: 1}} data={{
                                         labels: provinceData.kelompok_umur.map(el => el.key),
                                         datasets: [
                                             {

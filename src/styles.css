@@ -1,0 +1,8 @@
+.tableRow {
+    transition: 0.5s;
+}
+
+.tableRow:hover {
+    background-color: rgba(61, 135, 255, 0.25);
+    cursor: pointer;
+}

@@ -4,27 +4,29 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import About from './About'
 import Details from './Details'
 import Home from './Home'
+import bg from './bg.svg'
 
 function App() {
   const [data, setData] = useState(null)
+  const [dataStatus, setDataStatus] = useState('')
 
   useEffect(() => {
       const myFunc = async () => {
-        // console.log("fetching data")
+        setDataStatus('Fetching data...')
 
         await fetch("https://merfry0309.ip6dns.xyz/api/proxy/covidindo/")
           .then(resp => {
-            // console.log("data received, converting to json")
+            setDataStatus("Data Received, converting to JSON...")
 
             return resp.json()
           })
           .then(json => {
-            // console.log('data converted to json, preprocessing')
+            setDataStatus('Data converted to JSON, preprocessing...')
 
             const temp = json.data.map((el, idx) => ({index: idx, ...el}))
 
             json.data = temp
-            setData(json)
+            setTimeout(() => setData(json), 500)
           })
       }
 
@@ -41,10 +43,16 @@ function App() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100%'
+            height: '100%',
+            flexDirection: 'column',
+            backgroundImage: `url(${bg})`,
+            backgroundSize: 'cover'
           }}>
-            <Typography variant='h3' component='div'>
-              Loading Data...   
+            <Typography variant='h3' component='div' style={{color: 'white'}}>
+              Loading Data...
+            </Typography>
+            <Typography style={{marginTop: '3em', color: 'white'}}>
+              {dataStatus}
             </Typography>
           </div>
           :
