@@ -12,15 +12,19 @@ ChartJS.register(ArcElement, Legend, Tooltip, CategoryScale, LinearScale, BarEle
 
 function Details() {
     const [apiData, setApiData] = useState(null)
+    const [dataStatus, setDataStatus] = useState('')
     const param = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
+        setDataStatus('Fetching data...')
         fetch("https://merfry0309.ip6dns.xyz/api/proxy/covidindo2")
-            .then(resp => resp.json())
-            .then(data => {
-                setApiData(data)
+            .then(resp => {
+                setDataStatus('Data Received, converting to JSON...')
+
+                return resp.json()
             })
+            .then(data => setApiData(data))
     }, [])
 
     const provinceName = param.id.split('_').map(el => el.split('').map((e, idx) => idx > 0 ? e.toLowerCase() : e).join('')).join(' ')
@@ -31,7 +35,8 @@ function Details() {
             display: 'flex',
             height: '100%',
             flexDirection: 'column',
-            backgroundImage: `url(${bg})`
+            backgroundImage: `url(${bg})`,
+            backgroundSize: 'cover'
         }}>
             {
                 !apiData ? 
@@ -40,9 +45,13 @@ function Details() {
                         justifyContent: 'center',
                         alignItems: 'center',
                         height: '100%',
+                        flexDirection: 'column'
                     }}>
                         <Typography variant='h3' component='div' style={{color: 'white'}}>
                             Fetching details for {provinceName}...
+                        </Typography>
+                        <Typography style={{marginTop: '3em', color: 'white'}}>
+                            {dataStatus}
                         </Typography>
                     </div>
                     :
