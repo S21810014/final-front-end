@@ -75,7 +75,21 @@ function About() {
                 padding: '1em',
                 boxSizing: 'border-box'
             }}>
-                <Typography>About</Typography>
+                <Typography variant='h4' style={{alignSelf: 'center', marginTop: '0.5em'}}>
+                    Covid-19 Level | Indo <br/> <br/>
+                </Typography>
+                <Typography>
+                    Sumber informasi sederhana untuk mengetahui resiko penularan Covid-19 di daerah-daerah yang ada di Indonesia
+                    <br/>
+                    <br/>
+                    Dibuat untuk memenuhi tugas Front-end Web Development - B
+                    <br/>
+                    Oleh : Timothy Merfry Tiwow
+                    <br/>
+                    NIM : 105021810004
+                    <br/>
+                    Program Studi : Informatika
+                </Typography>
             </Paper>
         </div>
     )
